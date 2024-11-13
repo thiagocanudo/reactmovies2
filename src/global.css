@@ -2,38 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
+@layer base {
+  body {
+    @apply bg-brand-blue-dark;
+    @apply text-white;
+    overflow-y: scroll;
+  }
 
-    body{
-        @apply bg-brand-blue-dark;
-        @apply text-white;
-        padding-bottom: 75px;
-        overflow-y: scroll;
-    }
+  html {
+    font-family: 'Montserrat', sans-serif;
+  }
 
-    html{
-        font-family: "Montserrat", sans-serif;
-    }
+  h3 {
+    @apply font-bold;
+  }
 
-    h3{
-        @apply font-bold;
-    }
-
-    /* @screen md{
+  /* @screen md{
         h3{
             @apply text-5xl;
         }
     } */
 
-    h4{
-        @apply font-bold;
-    }
+  h4 {
+    @apply font-bold;
+  }
 
-    /* @screen md{
+  /* @screen md{
         h3{
             @apply text-3xl;
         }
     } */
-
-
 }
