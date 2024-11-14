@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getDataId } from '../api/tmdb';
+import { getDataId, getDataVideos } from '../api/tmdb';
+import { BarLoader } from 'react-spinners';
 
 export function Detalhes() {
   // console.log(useParams());
   // console.log("desestruturação do objeto: " +useParams().id+ " e " +useParams().categoria);
+
+  const [loading, setLoading] = useState(true);
 
   const { categoria } = useParams();
   const { id } = useParams();
@@ -12,18 +15,38 @@ export function Detalhes() {
   const navigate = useNavigate();
 
   const [item, setItem] = useState([]);
+  const [itemVideo, setItemVideo] = useState([]);
 
   async function loadData() {
-    const data = await getDataId(categoria, id);
-    setItem(data);
+    setLoading(true);
+    try {
+      const data = await getDataId(categoria, id);
+      setItem(data);
+    } catch (error) {
+      console.log('Erro ao buscar dados: ', error);
+    }
+  }
+
+  async function loadDataVideos() {
+    setLoading(true);
+    try {
+      const data = await getDataVideos(categoria, id);
+      setItemVideo(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.log('Erro ao buscar dados: ', error);
+    }
   }
 
   useEffect(() => {
     loadData();
+    loadDataVideos();
   }, []);
 
-  {
-    console.log(item);
+  if (loading) {
+    return <BarLoader width={'100%'} color="#00B1E9" className="mt-24" />;
   }
 
   return (
@@ -46,14 +69,14 @@ export function Detalhes() {
                 mx-auto
 
                 lg:absolute
-                lg:top-80
+                lg:top-40
                 lg:left-[50%]
                 lg:ml-[-425px]
 
                 bg-brand-dark
                 bg-opacity-50 
                 backdrop-blur-sm
-                items-center
+                items-start
                 gap-8
                 pr-6"
       >
@@ -75,6 +98,24 @@ export function Detalhes() {
             </li>
             <li>Avaliação: {item.vote_average?.toFixed(1)}</li>
           </ul>
+
+          <div className="bg-black">
+            {/* {categoria === 'filmes' && ()} */}
+            {id}
+            <iframe
+              className="mx-auto"
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${
+                itemVideo[itemVideo.length - 1].key
+              }?si=EUyYitu5wVAnXqz5`}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
 
           <p className="mt-2">{item.overview}</p>
 
