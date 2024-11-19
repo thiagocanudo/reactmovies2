@@ -26,15 +26,12 @@ export async function getDataVideos(categoria, id) {
   const endpoint = categoria == 'filmes' ? 'movie' : 'tv';
 
   // const response = await axios.get(`${BASE_URL}/${endpoint}/${id}/videos`, {
-  const response = await axios.get(
-    `${BASE_URL}/${endpoint}/1396/season/1/episode/1/videos`,
-    {
-      params: {
-        api_key: API_KEY,
-        language: 'PT-BR',
-      },
+  const response = await axios.get(`${BASE_URL}/${endpoint}/${id}/videos`, {
+    params: {
+      api_key: API_KEY,
+      language: 'PT-BR',
     },
-  );
+  });
   return response.data.results;
 }
 
