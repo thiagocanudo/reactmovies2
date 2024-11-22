@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDataId, getDataVideos } from "../api/tmdb";
-import { BarLoader } from "react-spinners";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getDataId, getDataVideos } from '../api/tmdb';
+import { BarLoader } from 'react-spinners';
 
 export function Detalhes() {
   // console.log(useParams());
@@ -25,7 +25,7 @@ export function Detalhes() {
       const data = await getDataId(categoria, id);
       setItem(data);
     } catch (error) {
-      console.log("Erro ao buscar dados: ", error);
+      console.log('Erro ao buscar dados: ', error);
     }
   }
 
@@ -38,7 +38,7 @@ export function Detalhes() {
         setLoading(false);
       }, 1000);
     } catch (error) {
-      console.log("Erro ao buscar dados: ", error);
+      console.log('Erro ao buscar dados: ', error);
     }
   }
 
@@ -48,7 +48,7 @@ export function Detalhes() {
   }, []);
 
   if (loading) {
-    return <BarLoader width={"100%"} color="#00B1E9" className="mt-24" />;
+    return <BarLoader width={'100%'} color="#00B1E9" className="mt-24" />;
   }
 
   return (
@@ -89,7 +89,7 @@ export function Detalhes() {
           <h2 className="mt-2 font-bold text-lg">{item.title || item.name}</h2>
           <ul>
             <li>
-              Ano:{" "}
+              Ano:{' '}
               {item.first_air_date?.substring(0, 4) ||
                 item.release_date?.substring(0, 4)}
             </li>

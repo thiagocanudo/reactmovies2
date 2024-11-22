@@ -5,9 +5,11 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 // https://api.themoviedb.org/3/movie/popular?api_key=81154aa94ab4961e8bc2a66dad78bf47
 // https://api.themoviedb.org/3/tv/popular?api_key=81154aa94ab4961e8bc2a66dad78bf47
 
+//https://api.themoviedb.org/3/movie/1124641/videos?api_key=81154aa94ab4961e8bc2a66dad78bf47
+
 // Função que irá buscar os itens (filmes e series)
+// A função 'awayt' precisa estar dentro de uma função 'async'
 export async function getData(categoria, page, ordem) {
-  // A função 'awayt' precisa estar dentro de uma função 'async'
   const endpoint = categoria == 'filmes' ? 'movie' : 'tv';
   const response = await axios.get(`${BASE_URL}/${endpoint}/${ordem}`, {
     params: {
@@ -20,15 +22,15 @@ export async function getData(categoria, page, ordem) {
 }
 
 export async function getDataVideos(categoria, id) {
-  const endpoint = categoria == 'filmes' ? 'movie' : 'tv';
+  const endpoint = categoria === 'filmes' ? 'movie' : 'tv';
 
-  // const response = await axios.get(`${BASE_URL}/${endpoint}/${id}/videos`, {
   const response = await axios.get(`${BASE_URL}/${endpoint}/${id}/videos`, {
     params: {
       api_key: API_KEY,
       language: 'pt-BR',
     },
   });
+
   return response.data.results;
 }
 
